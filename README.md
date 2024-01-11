@@ -13,6 +13,6 @@ check: [GPGGA](http://aprs.gids.nl/nmea/#gga)
 
 ## Build
 
-$ `gcc -o gps_reader gps_reader.c`
+$ `gcc -o neo-6mv2_reader neo-6mv2_reader.c`
 
 

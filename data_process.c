@@ -10,12 +10,11 @@
 
 bool RAW = false;
 
-static void parse_data(char *dt_ln)
+static void parse_data(char *dt_ln, int chck_sum)
 {
         int cntr = 0;
         char *gga = "$GPGGA";
         char *nmea_mssg;
-        printf(">> %s\n", dt_ln);
         char *dt_itm = strtok(dt_ln, DATA_DELIMITER);
         while (dt_itm != NULL) {
                 if (cntr == 0) {
@@ -28,7 +27,7 @@ static void parse_data(char *dt_ln)
                 
                 NMEA_GGA gpgga; 
                 if (nmea_mssg != NULL && strcmp(nmea_mssg, gga) == 0) {
-                        get_nmea_gga_message(dt_itm, cntr, &gpgga);
+                        get_nmea_gga_message(dt_itm, cntr, &gpgga, chck_sum);
                         if (cntr == 13)
                                 print_nmea_gga_message(gpgga);
                 }
@@ -44,7 +43,10 @@ void process_buffer(uint8_t *buff)
 	int i = 0;
         char dt_ln[100];
         bool nw = false;
-	for (i; i < BUFF_SIZE; i++) {
+        int chck_sum;
+        bool dt_chck_sum = true;
+
+	for (; i < BUFF_SIZE; i++) {
                 char data = buff[i];
                 if (RAW)
                         printf("%c", data);
@@ -53,14 +55,27 @@ void process_buffer(uint8_t *buff)
                         nw = true;
                         cntr = 0;
                         memset(dt_ln, 0, sizeof(dt_ln));
+                        chck_sum = 0;
+                        dt_chck_sum = true;
                 }
 		if (data == '\n') { 
                         nw = false;
-                        parse_data(dt_ln);
+                        parse_data(dt_ln, chck_sum);
                 }
                 if (nw) {
-                        dt_ln[cntr] = data;
-                        cntr++;
+                        if (data == '*')
+                                dt_chck_sum = false;
+                         if (data != '*'  && 
+                            data != '$' && data != ' ' &&
+                            data != '\n') {
+                                 if (dt_chck_sum) 
+                                         chck_sum = chck_sum ^ data;
+                        }
+
+                        if (data != '*' ) {
+                                dt_ln[cntr] = data;
+                                cntr++;
+                        }
                 } 
 	}
 }
@@ -68,9 +83,8 @@ void process_buffer(uint8_t *buff)
 void read_gps_data(int fd)
 {
 	uint8_t buff[BUFF_SIZE];
-	int cntr = 0;
 	for (;;) {
-		int n = read(fd, buff, sizeof buff);
+		read(fd, buff, sizeof buff);
 		process_buffer(buff);
 	}
 }

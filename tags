@@ -60,38 +60,37 @@
 !_TAG_ROLE_DESCRIPTION!C++!header	system	/system header/
 !_TAG_ROLE_DESCRIPTION!C++!macro	undef	/undefined/
 BUFF_SIZE	data_process.h	/^#define BUFF_SIZE /;"	d
-BUFF_SIZE	gps_reader.c	/^#define BUFF_SIZE /;"	d	file:
 Build	README.md	/^## Build$/;"	s	chapter:NEO-6MV2
 Connection RPI	README.md	/^## Connection RPI$/;"	s	chapter:NEO-6MV2
 DATA_DELIMITER	data_process.h	/^#define DATA_DELIMITER /;"	d
 NEO-6MV2	README.md	/^# NEO-6MV2$/;"	c
+NMEA messages	README.md	/^### NMEA messages$/;"	S	section:NEO-6MV2""TODOs
+NMEA messages implemented	README.md	/^## NMEA messages implemented$/;"	s	chapter:NEO-6MV2
 NMEA_GGA	nmea_messages.h	/^}NMEA_GGA;$/;"	t	typeref:struct:__anona3a528930108
 RAW	data_process.c	/^bool RAW = false;$/;"	v	typeref:typename:bool
+TODOs	README.md	/^## TODOs$/;"	s	chapter:NEO-6MV2
+Tested on	README.md	/^## Tested on$/;"	s	chapter:NEO-6MV2
 __anona3a528930108	nmea_messages.h	/^typedef struct {$/;"	s
 alt	nmea_messages.h	/^        float alt;$/;"	m	struct:__anona3a528930108	typeref:typename:float
 alt_units	nmea_messages.h	/^        char *alt_units;$/;"	m	struct:__anona3a528930108	typeref:typename:char *
 chck_sum	nmea_messages.h	/^        char *chck_sum;$/;"	m	struct:__anona3a528930108	typeref:typename:char *
+data_valid	nmea_messages.h	/^        bool data_valid; \/\/ if the checksum is valid$/;"	m	struct:__anona3a528930108	typeref:typename:bool
 dir_lat	nmea_messages.h	/^        char *dir_lat;$/;"	m	struct:__anona3a528930108	typeref:typename:char *
 dir_long	nmea_messages.h	/^        char *dir_long;$/;"	m	struct:__anona3a528930108	typeref:typename:char *
 geoid_sep	nmea_messages.h	/^        float geoid_sep;$/;"	m	struct:__anona3a528930108	typeref:typename:float
 geoid_sep_units	nmea_messages.h	/^        char *geoid_sep_units;$/;"	m	struct:__anona3a528930108	typeref:typename:char *
-get_nmea_gga_message	nmea_messages.c	/^void get_nmea_gga_message(char *dt_itm, int itm, NMEA_GGA *gpgga)$/;"	f	typeref:typename:void
+get_nmea_gga_message	nmea_messages.c	/^void get_nmea_gga_message(char *dt_itm, int itm, NMEA_GGA *gpgga, int chck_sum)$/;"	f	typeref:typename:void
 hdop	nmea_messages.h	/^        float hdop;$/;"	m	struct:__anona3a528930108	typeref:typename:float
 id	nmea_messages.h	/^        char *id;$/;"	m	struct:__anona3a528930108	typeref:typename:char *
 latitude	nmea_messages.h	/^        float latitude;$/;"	m	struct:__anona3a528930108	typeref:typename:float
 longitude	nmea_messages.h	/^        float longitude;$/;"	m	struct:__anona3a528930108	typeref:typename:float
-main	gps_reader.c	/^int main(int argc, char **argv)$/;"	f	typeref:typename:int
 main	neo-6mv2_reader.c	/^int main(int argc, char **argv)$/;"	f	typeref:typename:int
-parse_data	data_process.c	/^static void parse_data(char *dt_ln)$/;"	f	typeref:typename:void	file:
+parse_data	data_process.c	/^static void parse_data(char *dt_ln, int chck_sum)$/;"	f	typeref:typename:void	file:
 print_nmea_gga_message	nmea_messages.c	/^void print_nmea_gga_message(NMEA_GGA gga)$/;"	f	typeref:typename:void
 process_buffer	data_process.c	/^void process_buffer(uint8_t *buff)$/;"	f	typeref:typename:void
-process_buffer	gps_reader.c	/^void process_buffer(uint8_t *buff)$/;"	f	typeref:typename:void
 qlty	nmea_messages.h	/^        int qlty;$/;"	m	struct:__anona3a528930108	typeref:typename:int
 read_gps_data	data_process.c	/^void read_gps_data(int fd)$/;"	f	typeref:typename:void
-read_gps_data	gps_reader.c	/^static void read_gps_data(int fd)$/;"	f	typeref:typename:void	file:
 sat_num	nmea_messages.h	/^        int sat_num;$/;"	m	struct:__anona3a528930108	typeref:typename:int
-set_blocking	gps_reader.c	/^static void set_blocking(int fd, int should_block)$/;"	f	typeref:typename:void	file:
 set_blocking	interface_comm.c	/^void set_blocking(int fd, int should_block)$/;"	f	typeref:typename:void
-set_interface_attribs	gps_reader.c	/^static int set_interface_attribs(int fd, int speed, int parity)$/;"	f	typeref:typename:int	file:
 set_interface_attribs	interface_comm.c	/^int set_interface_attribs(int fd, int speed, int parity)$/;"	f	typeref:typename:int
 utc_pstfx	nmea_messages.h	/^        float utc_pstfx;$/;"	m	struct:__anona3a528930108	typeref:typename:float

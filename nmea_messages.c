@@ -3,6 +3,8 @@
 
 #include "nmea_messages.h"
 
+//TODO: deal with checksum
+
 void print_nmea_gga_message(NMEA_GGA gga)
 {
         printf("id: %s\n"
@@ -20,7 +22,8 @@ void print_nmea_gga_message(NMEA_GGA gga)
                "geoid_sep_units: %s\n"
                /*"diff_gps: %s\n"*/
                /*"id_station: %d\n"*/
-               "chck_sum: %s\n",
+               "chck_sum: %s\n"
+               "data_valid: %s\n",
                 gga.id,
                 gga.utc_pstfx,
                 gga.latitude,
@@ -36,10 +39,11 @@ void print_nmea_gga_message(NMEA_GGA gga)
                 gga.geoid_sep_units,
                 /*gga.diff_gps,*/
                 /*gga.id_station,*/
-                gga.chck_sum);
+                gga.chck_sum,
+                gga.data_valid ? "true" : "false");
 }
 
-void get_nmea_gga_message(char *dt_itm, int itm, NMEA_GGA *gpgga)
+void get_nmea_gga_message(char *dt_itm, int itm, NMEA_GGA *gpgga, int chck_sum)
 {
         switch (itm) {
                 case 0:
@@ -82,6 +86,9 @@ void get_nmea_gga_message(char *dt_itm, int itm, NMEA_GGA *gpgga)
                         break;
                 case 13:
                         gpgga->chck_sum = dt_itm;
+                        gpgga->data_valid = (int)strtol(dt_itm, NULL, 16) == 
+                                chck_sum ? true : false;
+                        break;
                 default:
                         break;
         }

@@ -12,12 +12,14 @@ And [here](https://aprs.gids.nl/nmea) more info about all the **$GPxxx** sentenc
 
 ## Connection RPI
 
-| NEO-6MV2 | RPi |
-|----------|-----|
-| Vcc 3.3v |  1  |
-|    Rx    |  8  |
-|    Tx    | 10  |
-|   GND    |  6  |
+| NEO-6MV2 |       RPi      |
+|----------|----------------|
+| Vcc 3.3v |  1 3v3 Power   |
+|    Rx    |  8 GPIO 14 TxD |
+|    Tx    | 10 GPIO 15 RxD |
+|   GND    |  6 GND         |
+
+Note: Rx conncetion between neo-6vm2 and RPi's pin 8 (GPIO 14 TxD) is not need it.
 
 ## Build
 
@@ -25,12 +27,11 @@ $ `gcc -Wall neo-6mv2_reader.c data_process.c interface_comm.c nmea_messages.c`
 
 ## Tested on
 
-- Raspberry Pi 3 Model B Rev 1.2 (Raspbian GNU/Linux 11 (bullseye))
-
+- Raspberry Pi 3 Model B Rev 1.2 (Raspbian GNU/Linux 11 (bullseye)) armv7l Linux6.1.21-v7+ ARMv7 rev 4
 
 ## TODOs
 
-- Deal with checksums ;)
+- Not working at **Raspberry Pi Zero W Rev 1.1 (Raspbian GNU/Linux 11 (bullseye))** armv6l Linux 6.1.21+ ARMv6-compatible rev 7 (v6l)
 
 ### NMEA messages
 

@@ -3,7 +3,6 @@
 #include <termios.h>
 #include <unistd.h>
 #include <stdio.h>
-#include <stdint.h>
 
 #include "interface_comm.h"
 

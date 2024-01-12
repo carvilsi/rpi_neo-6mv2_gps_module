@@ -9,6 +9,9 @@
 #include "data_process.h"
 #include "interface_comm.h"
 
+#define BAUD_RATE B9600
+#define NO_PARITY 0
+
 int main(int argc, char **argv)
 {
 	if (argc < 2) {
@@ -24,7 +27,7 @@ int main(int argc, char **argv)
 	        printf("error %d opening %s: %s", errno, portname, strerror(errno));
 	}
 	
-	set_interface_attribs(fd, B9600, 0);
+	set_interface_attribs(fd, BAUD_RATE, NO_PARITY);
 	set_blocking(fd, 0);
 
 	read_gps_data(fd);

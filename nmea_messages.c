@@ -1,7 +1,32 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "nmea_messages.h"
+
+char *get_nmea_message_string(char *typ_nmea_mssg)
+{
+        char *str_nmea_message = NULL;
+
+        if (strcmp(GGA, typ_nmea_mssg) == 0) {
+                str_nmea_message = PGGGA;
+        } else if (strcmp(GSV, typ_nmea_mssg) == 0) {
+                str_nmea_message = PGGSV;
+        } else if (strcmp(GSA, typ_nmea_mssg) == 0) {
+                str_nmea_message = PGGSA;
+        } else if (strcmp(GLL, typ_nmea_mssg) == 0) {
+                str_nmea_message = PGGLL;
+        } else if (strcmp(RMC, typ_nmea_mssg) == 0) {
+                str_nmea_message = PGRMC;
+        } else if (strcmp(VTG, typ_nmea_mssg) == 0) {
+                str_nmea_message = PGVTG;
+        } else {
+                fprintf(stderr, "The provided type of NMEA message: %s\n" 
+                                "is not valid\n", typ_nmea_mssg);
+                exit(EXIT_FAILURE);
+        }
+        return str_nmea_message;
+}
 
 void print_nmea_gga_message(NMEA_GGA gga)
 {

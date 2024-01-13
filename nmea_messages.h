@@ -1,5 +1,19 @@
 #include <stdbool.h>
 
+#define GGA "gga"
+#define GSV "gsv"
+#define GSA "gsa"
+#define GLL "gll"
+#define RMC "rmc"
+#define VTG "vtg"
+
+#define PGGGA "$PGGGA"
+#define PGGSV "$PGGSV"
+#define PGGSA "$PGGSA"
+#define PGGLL "$PGGLL"
+#define PGRMC "$PGRMC"
+#define PGVTG "$PGVTG"
+
 // $GPGGA
 // check: https://aprs.gids.nl/nmea/#gga
 typedef struct {
@@ -24,3 +38,4 @@ typedef struct {
 
 void get_nmea_gga_message(char *dt_itm, int itm, NMEA_GGA *gga, int chck_sum);
 void print_nmea_gga_message(NMEA_GGA gga);
+char *get_nmea_message_string(char *typ_nmea_mssg);

@@ -10,7 +10,7 @@
 
 bool RAW = false;
 
-static void parse_data(char *dt_ln, int chck_sum)
+static void parse_data(char *dt_ln, int chck_sum, char *typ_nmea_mssg)
 {
         int cntr = 0;
         char *gga = "$GPGGA";
@@ -25,8 +25,8 @@ static void parse_data(char *dt_ln, int chck_sum)
                         }
                 }
                 
-                NMEA_GGA gpgga; 
-                if (nmea_mssg != NULL && strcmp(nmea_mssg, gga) == 0) {
+               NMEA_GGA gpgga; 
+               if (nmea_mssg != NULL && strcmp(nmea_mssg, gga) == 0) {
                         get_nmea_gga_message(dt_itm, cntr, &gpgga, chck_sum);
                         if (cntr == 13)
                                 print_nmea_gga_message(gpgga);
@@ -38,7 +38,7 @@ static void parse_data(char *dt_ln, int chck_sum)
 }
 
 // XXX: Not super proud about check sum approach
-void process_buffer(uint8_t *buff)
+void process_buffer(uint8_t *buff, char *typ_nmea_mssg)
 {
         int cntr = 0;
 	int i = 0;
@@ -61,7 +61,7 @@ void process_buffer(uint8_t *buff)
                 }
 		if (data == '\n') { 
                         nw = false;
-                        parse_data(dt_ln, chck_sum);
+                        parse_data(dt_ln, chck_sum, typ_nmea_mssg);
                 }
                 if (nw) {
                         if (data == '*')
@@ -81,12 +81,12 @@ void process_buffer(uint8_t *buff)
 	}
 }
 
-void read_gps_data(int fd)
+void read_gps_data(int fd, char *typ_nmea_mssg)
 {
 	uint8_t buff[BUFF_SIZE];
 	for (;;) {
 		read(fd, buff, sizeof buff);
-		process_buffer(buff);
+		process_buffer(buff, typ_nmea_mssg);
 	}
 }
 

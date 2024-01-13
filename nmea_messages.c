@@ -3,8 +3,6 @@
 
 #include "nmea_messages.h"
 
-//TODO: deal with checksum
-
 void print_nmea_gga_message(NMEA_GGA gga)
 {
         printf("id: %s\n"

@@ -37,6 +37,7 @@ static void parse_data(char *dt_ln, int chck_sum)
         }
 }
 
+// XXX: Not super proud about check sum approach
 void process_buffer(uint8_t *buff)
 {
         int cntr = 0;
@@ -47,7 +48,7 @@ void process_buffer(uint8_t *buff)
         bool dt_chck_sum = true;
 
 	for (; i < BUFF_SIZE; i++) {
-                char data = buff[i];
+                uint8_t data = buff[i];
                 if (RAW)
                         printf("%c", data);
 		

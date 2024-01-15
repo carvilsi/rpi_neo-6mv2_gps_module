@@ -4,23 +4,21 @@
 
 #include "nmea_messages.h"
 
-char *get_nmea_message_string(nmea_mssg *mssg)
+void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_mssg_cntr)
 {
-        char *str_nmea_message = NULL;
-
-        switch (mssg->msg_type) {
+        switch (mssg->type) {
                 case GGA:
-                        str_nmea_message = PGGGA;
+                        *nmea_mssg_str = PGGGA;
+                        *nmea_mssg_cntr = PGGGA_CNTR;
                         break;
                 case GLL:
-                        str_nmea_message = PGGLL;
+                        *nmea_mssg_str = PGGLL;
+                        *nmea_mssg_cntr = PGGLL_CNTR;
                         break;
                 default:
                         fprintf(stderr, "The nmea message type is unknown\n");
                         exit(EXIT_FAILURE);
         }
-
-        return str_nmea_message;
 }
 
 void print_nmea_gga_message(nmea_gga *gga)

@@ -8,7 +8,6 @@
 
 #include "data_process.h"
 #include "interface_comm.h"
-/*#include "nmea_messages.h"*/
 
 #define BAUD_RATE B9600
 #define NO_PARITY 0
@@ -38,10 +37,13 @@ int main(int argc, char **argv)
 
         nmea_gga pggga;
         nmea_mssg mssg;
-        mssg.msg_type = GGA;
+        mssg.type = GGA;
         mssg.gga = &pggga;
 
 	read_gps_data(fd, &mssg);
+        
+        //TODO: we need to have this!
+        /*print_nmea_gga_message(mssg.gga);*/
 		
 	return 0;
 }

@@ -14,6 +14,9 @@
 #define PGRMC "$GPRMC"
 #define PGVTG "$GPVTG"
 
+#define PGGGA_CNTR 13
+#define PGGLL_CNTR 7
+
 // $GPGGA
 // check: https://aprs.gids.nl/nmea/#gga
 typedef struct {
@@ -52,7 +55,7 @@ typedef struct {
         enum {
                 GGA,
                 GLL
-        }msg_type;
+        }type;
         union {
                 nmea_gga *gga;
                 nmea_gll *gll;
@@ -61,4 +64,4 @@ typedef struct {
 
 void get_nmea_gga_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
 void print_nmea_gga_message(nmea_gga *gga);
-char *get_nmea_message_string(nmea_mssg *mssg);
+void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_mssg_cntr);

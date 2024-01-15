@@ -6,30 +6,37 @@
 #include <stdlib.h>
 
 #include "data_process.h"
-/*#include "nmea_messages.h"*/
 
 bool RAW = false;
 
 static void parse_data(char *dt_ln, int chck_sum, nmea_mssg *mssg)
 {
         int cntr = 0;
-        char *gga = get_nmea_message_string(mssg);
+        char *nmea_mssg_str = NULL;
+        int nmea_mssg_cntr;
+        get_nmea_message_values(mssg, &nmea_mssg_str, &nmea_mssg_cntr);
         char *nmea_mssg_typ;
         char *dt_itm = strtok(dt_ln, DATA_DELIMITER);
         while (dt_itm != NULL) {
                 if (cntr == 0) {
-                        if (strcmp(dt_itm, gga) == 0) {
-                                nmea_mssg_typ = gga;
+                        if (strcmp(dt_itm, nmea_mssg_str) == 0) {
+                                nmea_mssg_typ = nmea_mssg_str;
                         } else {
                                 nmea_mssg_typ = NULL;
                         }
                 }
                 
-               /*NMEA_GGA gpgga; */
-               if (nmea_mssg_typ != NULL && strcmp(nmea_mssg_typ, gga) == 0) {
-                        get_nmea_gga_message(dt_itm, cntr, mssg, chck_sum);
-                        if (cntr == 13)
-                                print_nmea_gga_message(mssg->gga);
+               if (nmea_mssg_typ != NULL && strcmp(nmea_mssg_typ, nmea_mssg_str) == 0) {
+                       switch (mssg->type) {
+                               case GGA:
+                                        get_nmea_gga_message(dt_itm, cntr, mssg, chck_sum);
+                                        //TODO: We can remove this from here...
+                                        if (cntr == nmea_mssg_cntr)
+                                                print_nmea_gga_message(mssg->gga);
+                                        break;
+                                default:
+                                        fprintf(stderr, "Unkown nmea message type\n");
+                       }
                 }
                 
                 cntr++;
@@ -84,9 +91,9 @@ void process_buffer(uint8_t *buff, nmea_mssg *mssg)
 void read_gps_data(int fd, nmea_mssg *mssg)
 {
 	uint8_t buff[BUFF_SIZE];
-	for (;;) {
+        for (;;) {
 		read(fd, buff, sizeof buff);
 		process_buffer(buff, mssg);
-	}
+        }
 }
 

@@ -6,30 +6,30 @@
 #include <stdlib.h>
 
 #include "data_process.h"
-#include "nmea_messages.h"
+/*#include "nmea_messages.h"*/
 
 bool RAW = false;
 
-static void parse_data(char *dt_ln, int chck_sum, char *typ_nmea_mssg)
+static void parse_data(char *dt_ln, int chck_sum, nmea_mssg *mssg)
 {
         int cntr = 0;
-        char *gga = "$GPGGA";
-        char *nmea_mssg;
+        char *gga = get_nmea_message_string(mssg);
+        char *nmea_mssg_typ;
         char *dt_itm = strtok(dt_ln, DATA_DELIMITER);
         while (dt_itm != NULL) {
                 if (cntr == 0) {
                         if (strcmp(dt_itm, gga) == 0) {
-                                nmea_mssg = gga;
+                                nmea_mssg_typ = gga;
                         } else {
-                                nmea_mssg = NULL;
+                                nmea_mssg_typ = NULL;
                         }
                 }
                 
-               NMEA_GGA gpgga; 
-               if (nmea_mssg != NULL && strcmp(nmea_mssg, gga) == 0) {
-                        get_nmea_gga_message(dt_itm, cntr, &gpgga, chck_sum);
+               /*NMEA_GGA gpgga; */
+               if (nmea_mssg_typ != NULL && strcmp(nmea_mssg_typ, gga) == 0) {
+                        get_nmea_gga_message(dt_itm, cntr, mssg, chck_sum);
                         if (cntr == 13)
-                                print_nmea_gga_message(gpgga);
+                                print_nmea_gga_message(mssg->gga);
                 }
                 
                 cntr++;
@@ -38,7 +38,7 @@ static void parse_data(char *dt_ln, int chck_sum, char *typ_nmea_mssg)
 }
 
 // XXX: Not super proud about check sum approach
-void process_buffer(uint8_t *buff, char *typ_nmea_mssg)
+void process_buffer(uint8_t *buff, nmea_mssg *mssg)
 {
         int cntr = 0;
 	int i = 0;
@@ -61,7 +61,7 @@ void process_buffer(uint8_t *buff, char *typ_nmea_mssg)
                 }
 		if (data == '\n') { 
                         nw = false;
-                        parse_data(dt_ln, chck_sum, typ_nmea_mssg);
+                        parse_data(dt_ln, chck_sum, mssg);
                 }
                 if (nw) {
                         if (data == '*')
@@ -81,12 +81,12 @@ void process_buffer(uint8_t *buff, char *typ_nmea_mssg)
 	}
 }
 
-void read_gps_data(int fd, char *typ_nmea_mssg)
+void read_gps_data(int fd, nmea_mssg *mssg)
 {
 	uint8_t buff[BUFF_SIZE];
 	for (;;) {
 		read(fd, buff, sizeof buff);
-		process_buffer(buff, typ_nmea_mssg);
+		process_buffer(buff, mssg);
 	}
 }
 

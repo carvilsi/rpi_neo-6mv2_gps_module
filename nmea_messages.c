@@ -150,6 +150,7 @@ void get_nmea_gll_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
                         mssg->gll->status = strdup(dt_itm);
                         break;
                 case 7:
+                        memmove(dt_itm, dt_itm + 1, strlen(dt_itm));
                         mssg->gll->chck_sum = strdup(dt_itm);
                         mssg->gll->data_valid = (int)strtol(dt_itm, NULL, 16) == 
                                 chck_sum ? true : false;

@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "data_process.h"
-#include "interface_comm.h"
+#include "lib/data_process.h"
+#include "lib/interface_comm.h"
 
 #define BAUD_RATE B9600
 #define NO_PARITY 0
@@ -25,6 +25,7 @@ int main(int argc, char **argv)
 
 	char *portname = argv[1];
 	
+        //TODO: move this to lib folder
 	int fd = open(portname, O_RDWR | O_NOCTTY | O_SYNC);
 	if (fd < 0) {
 	        printf("error %d opening %s: %s", errno, portname, strerror(errno));

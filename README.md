@@ -9,6 +9,7 @@ And [here](https://aprs.gids.nl/nmea) more info about all the **$GPxxx** sentenc
 ## NMEA messages implemented
 
 - [GPGGA](http://aprs.gids.nl/nmea/#gga)
+- [GLL](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_GLL.html)
 
 ## Connection RPI
 
@@ -37,7 +38,12 @@ $ `gcc -Wall neo-6mv2_reader.c data_process.c interface_comm.c nmea_messages.c`
 
 - [GSV](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_GSV.html)
 - [GSA](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_GSA.html)
-- [GLL](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_GLL.html)
 - [RMC](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_RMC.html)
 - [VTG](https://aprs.gids.nl/nmea/#vtg)
 
+---
+
+Feedback from usage and contributions are very welcome.
+Also if you like it, please leave a :star: I would appreciate it ;)
+
+<3 & Hack the Planet!

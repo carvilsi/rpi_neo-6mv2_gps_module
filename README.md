@@ -24,7 +24,7 @@ Note: Rx conncetion between neo-6vm2 and RPi's pin 8 (GPIO 14 TxD) is not need i
 
 ## Build
 
-$ `gcc -Wall neo-6mv2_reader.c data_process.c interface_comm.c nmea_messages.c`
+$ `gcc -Wall neo-6mv2_reader.c lib/data_process.c lib/interface_comm.c lib/nmea_messages.c`
 
 ## Tested on
 

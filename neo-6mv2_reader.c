@@ -1,57 +1,46 @@
-#include <errno.h>
-#include <fcntl.h> 
-#include <string.h>
-#include <termios.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "lib/data_process.h"
 #include "lib/interface_comm.h"
 
-#define BAUD_RATE B9600
-#define NO_PARITY 0
-
-//TODO: add a getopts
-//TODO: create a struct for the program options
+//TODO: add a getopts or maybe not (p.-)
+//TODO: create a struct for the program options or maybe not (p.-)
+//TODO: add Makefile xD
 int main(int argc, char **argv)
 {
 	if (argc < 2) {
 		printf(
                         "You need to provide the port where the GPS is connected\n" 
 		       "e.g: %s /dev/ttyAMA0 \n", argv[0]);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
+
+        if (strlen(argv[1]) > 50) {
+                fprintf(stderr, "%s seems to be a non valid port\n", argv[1]);
+                exit(EXIT_FAILURE);
+        }
 
 	char *portname = argv[1];
 	
-        //TODO: move this to lib folder
-	int fd = open(portname, O_RDWR | O_NOCTTY | O_SYNC);
-	if (fd < 0) {
-	        printf("error %d opening %s: %s", errno, portname, strerror(errno));
-	}
-	
-	set_interface_attribs(fd, BAUD_RATE, NO_PARITY);
-	set_blocking(fd, 0);
-
-        // trying to read a GGA NMEA message from module
-
+        // trying to read a GGA NMEA message from GPS module
         nmea_gga pggga;
         nmea_mssg mssg;
         mssg.type = GGA;
         mssg.gga = &pggga;
 
-        read_gps_data(fd, &mssg);
-        
+        read_gps_data(portname, &mssg);
         print_nmea_gga_message(mssg.gga);
 
+        // trying to read a GLL NMEA message from GPS module
         nmea_gll pggll;
         nmea_mssg ms;
         ms.type = GLL;
         ms.gll = &pggll;
 
-        read_gps_data(fd, &ms);
-
+        read_gps_data(portname, &ms);
         print_nmea_gll_message(ms.gll);
 		
 	return 0;

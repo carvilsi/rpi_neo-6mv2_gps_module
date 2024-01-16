@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "interface_comm.h"
 #include "data_process.h"
 
 bool RAW = false;
@@ -96,9 +97,10 @@ void process_buffer(uint8_t *buff, nmea_mssg *mssg)
 	}
 }
 
-void read_gps_data(int fd, nmea_mssg *mssg)
+void read_gps_data(char *portname, nmea_mssg *mssg)
 {
         done = 0;
+        int fd = init_serial_interface(portname);
 	uint8_t buff[BUFF_SIZE];
         while (done == 0) {
 		read(fd, buff, sizeof buff);

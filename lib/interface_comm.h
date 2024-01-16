@@ -1,3 +1,4 @@
-int set_interface_attribs(int fd, int speed, int parity);
-void set_blocking(int fd, int should_block);
+#define BAUD_RATE B9600
+#define NO_PARITY 0
 
+int init_serial_interface(char *portname);

@@ -1,12 +1,16 @@
 #include <errno.h>
+#include <fcntl.h> 
 #include <string.h>
 #include <termios.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <termios.h>
 
 #include "interface_comm.h"
 
-int set_interface_attribs(int fd, int speed, int parity)
+static int set_interface_attribs(int fd, int speed, int parity)
 {
         struct termios tty;
         if (tcgetattr(fd, &tty) != 0)
@@ -43,7 +47,7 @@ int set_interface_attribs(int fd, int speed, int parity)
         return 0;
 }
 
-void set_blocking(int fd, int should_block)
+static void set_blocking(int fd, int should_block)
 {
         struct termios tty;
         memset(&tty, 0, sizeof tty);
@@ -57,5 +61,18 @@ void set_blocking(int fd, int should_block)
 
         if (tcsetattr(fd, TCSANOW, &tty) != 0)
                 printf("error %d setting term attributes", errno);
+}
+
+int init_serial_interface(char *portname) 
+{
+	int fd = open(portname, O_RDWR | O_NOCTTY | O_SYNC);
+	if (fd < 0) {
+	        printf("error %d opening %s: %s", errno, portname, strerror(errno));
+	}
+	
+	set_interface_attribs(fd, BAUD_RATE, NO_PARITY);
+	set_blocking(fd, 0);
+
+        return fd;
 }
 

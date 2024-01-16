@@ -8,7 +8,6 @@
 
 //TODO: add a getopts or maybe not (p.-)
 //TODO: create a struct for the program options or maybe not (p.-)
-//TODO: add Makefile xD
 int main(int argc, char **argv)
 {
 	if (argc < 2) {

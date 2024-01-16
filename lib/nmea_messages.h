@@ -10,8 +10,6 @@
 #define PGGGA_CNTR 13
 #define PGGLL_CNTR 7
 
-//TODO: improve memory for structs
-
 #ifndef STRUCT_H_INCLUDED
 #define STRUCT_H_INCLUDED
 

@@ -40,10 +40,18 @@ int main(int argc, char **argv)
         mssg.type = GGA;
         mssg.gga = &pggga;
 
-	read_gps_data(fd, &mssg);
+        read_gps_data(fd, &mssg);
         
-        //TODO: we need to have this!
-        /*print_nmea_gga_message(mssg.gga);*/
+        print_nmea_gga_message(mssg.gga);
+
+        nmea_gll pggll;
+        nmea_mssg ms;
+        ms.type = GLL;
+        ms.gll = &pggll;
+
+        read_gps_data(fd, &ms);
+
+        print_nmea_gll_message(ms.gll);
 		
 	return 0;
 }

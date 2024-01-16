@@ -8,9 +8,11 @@
 #include "data_process.h"
 
 bool RAW = false;
+int done = 0;
 
 static void parse_data(char *dt_ln, int chck_sum, nmea_mssg *mssg)
 {
+        done = 0;
         int cntr = 0;
         char *nmea_mssg_str = NULL;
         int nmea_mssg_cntr;
@@ -30,12 +32,16 @@ static void parse_data(char *dt_ln, int chck_sum, nmea_mssg *mssg)
                        switch (mssg->type) {
                                case GGA:
                                         get_nmea_gga_message(dt_itm, cntr, mssg, chck_sum);
-                                        //TODO: We can remove this from here...
                                         if (cntr == nmea_mssg_cntr)
-                                                print_nmea_gga_message(mssg->gga);
+                                                done = 1;
+                                        break;
+                                case GLL:
+                                        get_nmea_gll_message(dt_itm, cntr, mssg, chck_sum);
+                                        if (cntr == nmea_mssg_cntr)
+                                                done = 1;
                                         break;
                                 default:
-                                        fprintf(stderr, "Unkown nmea message type\n");
+                                        fprintf(stderr, "Unknown nmea message type\n");
                        }
                 }
                 
@@ -85,13 +91,16 @@ void process_buffer(uint8_t *buff, nmea_mssg *mssg)
                                 cntr++;
                         }
                 } 
+                if (done)
+                        break;
 	}
 }
 
 void read_gps_data(int fd, nmea_mssg *mssg)
 {
+        done = 0;
 	uint8_t buff[BUFF_SIZE];
-        for (;;) {
+        while (done == 0) {
 		read(fd, buff, sizeof buff);
 		process_buffer(buff, mssg);
         }

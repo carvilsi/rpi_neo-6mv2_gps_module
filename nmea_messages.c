@@ -55,11 +55,30 @@ void print_nmea_gga_message(nmea_gga *gga)
                 gga->data_valid ? "true" : "false");
 }
 
+void print_nmea_gll_message(nmea_gll *gll) {
+        printf("id: %s\n"
+               "latitude: %f\n"
+               "dir_lat: %s\n"
+               "longitude: %f\n"
+               "dir_long: %s\n"
+               "utc_pstfx: %f\n"
+               "chck_sum: %s\n"
+               "data_valid: %s\n",
+                gll->id,
+                gll->latitude,
+                gll->dir_lat,
+                gll->longitude,
+                gll->dir_long,
+                gll->utc_pstfx,
+                gll->chck_sum,
+                gll->data_valid ? "true" : "false");
+}
+
 void get_nmea_gga_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
 {
         switch (itm) {
                 case 0:
-                        mssg->gga->id = dt_itm;
+                        mssg->gga->id = strdup(dt_itm);
                         break;
                 case 1:
                         mssg->gga->utc_pstfx = atof(dt_itm);
@@ -68,13 +87,13 @@ void get_nmea_gga_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
                         mssg->gga->latitude = atof(dt_itm);
                         break;
                 case 3:
-                        mssg->gga->dir_lat = dt_itm;
+                        mssg->gga->dir_lat = strdup(dt_itm);
                         break;
                 case 4:
                         mssg->gga->longitude = atof(dt_itm);
                         break;
                 case 5:
-                        mssg->gga->dir_long = dt_itm;
+                        mssg->gga->dir_long = strdup(dt_itm);
                         break;
                 case 6:
                         mssg->gga->qlty = atoi(dt_itm);
@@ -89,16 +108,50 @@ void get_nmea_gga_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
                         mssg->gga->alt = atof(dt_itm);
                         break;
                 case 10:
-                        mssg->gga->alt_units = dt_itm;
+                        mssg->gga->alt_units = strdup(dt_itm);
                 case 11:
                         mssg->gga->geoid_sep = atof(dt_itm);
                         break;
                 case 12:
-                        mssg->gga->geoid_sep_units = dt_itm;
+                        mssg->gga->geoid_sep_units = strdup(dt_itm);
                         break;
                 case 13:
-                        mssg->gga->chck_sum = dt_itm;
+                        mssg->gga->chck_sum = strdup(dt_itm);
                         mssg->gga->data_valid = (int)strtol(dt_itm, NULL, 16) == 
+                                chck_sum ? true : false;
+                        break;
+                default:
+                        break;
+        }
+}
+
+void get_nmea_gll_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
+{
+        switch (itm) {
+                case 0:
+                        mssg->gll->id = strdup(dt_itm);
+                        break;
+                case 1:
+                        mssg->gll->latitude = atof(dt_itm);
+                        break;
+                case 2:
+                        mssg->gll->dir_lat = strdup(dt_itm);
+                        break;
+                case 3:
+                        mssg->gll->longitude = atof(dt_itm);
+                        break;
+                case 4:
+                        mssg->gll->dir_long = strdup(dt_itm);
+                        break;
+                case 5:
+                        mssg->gll->utc_pstfx = atof(dt_itm);
+                        break;
+                case 6:
+                        mssg->gll->status = strdup(dt_itm);
+                        break;
+                case 7:
+                        mssg->gll->chck_sum = strdup(dt_itm);
+                        mssg->gll->data_valid = (int)strtol(dt_itm, NULL, 16) == 
                                 chck_sum ? true : false;
                         break;
                 default:

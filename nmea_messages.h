@@ -1,12 +1,5 @@
 #include <stdbool.h>
 
-//#define GGA "gga"
-//#define GSV "gsv"
-//#define GSA "gsa"
-//#define GLL "gll"
-//#define RMC "rmc"
-//#define VTG "vtg"
-
 #define PGGGA "$GPGGA"
 #define PGGSV "$GPGSV"
 #define PGGSA "$GPGSA"
@@ -16,6 +9,9 @@
 
 #define PGGGA_CNTR 13
 #define PGGLL_CNTR 7
+
+#ifndef STRUCT_H_INCLUDED
+#define STRUCT_H_INCLUDED
 
 // $GPGGA
 // check: https://aprs.gids.nl/nmea/#gga
@@ -62,6 +58,10 @@ typedef struct {
         };
 }nmea_mssg;
 
+#endif /* STRUCT_H_INCLUDED */
+
 void get_nmea_gga_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
 void print_nmea_gga_message(nmea_gga *gga);
+void get_nmea_gll_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
+void print_nmea_gll_message(nmea_gll *gll);
 void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_mssg_cntr);

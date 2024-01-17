@@ -52,6 +52,7 @@ typedef struct {
 
 //$GPGSV
 //check: https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_GSV.html
+//XXX: not fully implemented, missing data about 2nd, 3th and 4th SVs and checksum
 typedef struct {
         char *id; //0 Message ID $GPGSV
         int ttl_nmbr_mssgs; //1 Total number of messages of this type in this cycle
@@ -61,20 +62,6 @@ typedef struct {
         int elvt; //5 Elevation, in degrees, 90° maximum
         int azmt; //6 Azimuth, degrees from True North, 000° through 359°
         int snr; //7 SNR, 00 through 99 dB (null when not tracking)
-        int sv_prn_nmbr_2; // SV PRN number (second SV)
-        int elvt_2; // Elevation, in degrees, 90° maximum  (second SV)
-        int azmt_2; // Azimuth, degrees from True North, 000° through 359° (second SV)
-        int snr_2; // SNR, 00 through 99 dB (null when not tracking) (second SV)
-        int sv_prn_nmbr_3; // SV PRN number (third SV)
-        int elvt_3; // Elevation, in degrees, 90° maximum  (third SV)
-        int azmt_3; // Azimuth, degrees from True North, 000° through 359° (third SV)
-        int snr_3; // SNR, 00 through 99 dB (null when not tracking) (third SV)
-        int sv_prn_nmbr_4; // SV PRN number (fourth SV)
-        int elvt_4; // Elevation, in degrees, 90° maximum  (fourth SV)
-        int azmt_4; // Azimuth, degrees from True North, 000° through 359° (fourth SV)
-        int snr_4; // SNR, 00 through 99 dB (null when not tracking) (fourth SV)
-        char *chck_sum; // The checksum value of the data
-        bool data_valid; // if the checksum is valid
 }nmea_gsv;
 
 typedef struct {

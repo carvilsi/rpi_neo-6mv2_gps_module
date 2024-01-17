@@ -91,21 +91,21 @@ static void print_nmea_gsv_message(nmea_gsv *gsv)
                "sv_prn_nmbr: %d\n"
                "elvt: %d\n"
                "azmt: %d\n"
-               "snr: %d\n",
-               /*"sv_prn_nmbr_2: %d\n"*/
-               /*"elvt_2: %d\n"*/
-               /*"azmt_2: %d\n"*/
-               /*"snr_2: %d\n"*/
-               /*"sv_prn_nmbr_3: %d\n"*/
-               /*"elvt_3: %d\n"*/
-               /*"azmt_3: %d\n"*/
-               /*"snr_3: %d\n"*/
-               /*"sv_prn_nmbr_4: %d\n"*/
-               /*"elvt_4: %d\n"*/
-               /*"azmt_4: %d\n"*/
-               /*"snr_4: %d\n"*/
-               /*"chck_sum: %s\n"*/
-               /*"data_valid: %s\n",*/
+               "snr: %d\n"
+               "sv_prn_nmbr_2: %d\n"
+               "elvt_2: %d\n"
+               "azmt_2: %d\n"
+               "snr_2: %d\n"
+               "sv_prn_nmbr_3: %d\n"
+               "elvt_3: %d\n"
+               "azmt_3: %d\n"
+               "snr_3: %d\n"
+               "sv_prn_nmbr_4: %d\n"
+               "elvt_4: %d\n"
+               "azmt_4: %d\n"
+               "snr_4: %d\n"
+               "chck_sum: %s\n"
+               "data_valid: %s\n",
                gsv->id,
                gsv->ttl_nmbr_mssgs,
                gsv->mssg_nmbr,
@@ -113,21 +113,21 @@ static void print_nmea_gsv_message(nmea_gsv *gsv)
                gsv->sv_prn_nmbr,
                gsv->elvt,
                gsv->azmt,
-               gsv->snr);
-               /*gsv->sv_prn_nmbr_2,*/
-               /*gsv->elvt_2,*/
-               /*gsv->azmt_2,*/
-               /*gsv->snr_2,*/
-               /*gsv->sv_prn_nmbr_3,*/
-               /*gsv->elvt_3,*/
-               /*gsv->azmt_3,*/
-               /*gsv->snr_3,*/
-               /*gsv->sv_prn_nmbr_4,*/
-               /*gsv->elvt_4,*/
-               /*gsv->azmt_4,*/
-               /*gsv->snr_4,*/
-               /*gsv->chck_sum,*/
-               /*gsv->data_valid ? "true" : "false");*/
+               gsv->snr,
+               gsv->sv_prn_nmbr_2,
+               gsv->elvt_2,
+               gsv->azmt_2,
+               gsv->snr_2,
+               gsv->sv_prn_nmbr_3,
+               gsv->elvt_3,
+               gsv->azmt_3,
+               gsv->snr_3,
+               gsv->sv_prn_nmbr_4,
+               gsv->elvt_4,
+               gsv->azmt_4,
+               gsv->snr_4,
+               gsv->chck_sum,
+               gsv->data_valid ? "true" : "false");
 }
 
 static void print_nmea_gll_message(nmea_gll *gll) {
@@ -263,47 +263,47 @@ void get_nmea_gsv_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
                 case 7:
                         mssg->gsv->snr = atoi(dt_itm);
                         break;
-                /*case 8:*/
-                        /*mssg->gsv->sv_prn_nmbr_2 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 9:*/
-                        /*mssg->gsv->elvt_2 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 10:*/
-                        /*mssg->gsv->azmt_2 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 11:*/
-                        /*mssg->gsv->snr_2 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 12:*/
-                        /*mssg->gsv->sv_prn_nmbr_3 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 13:*/
-                        /*mssg->gsv->elvt_3 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 14:*/
-                        /*mssg->gsv->azmt_3 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 15:*/
-                        /*mssg->gsv->snr_3 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 16:*/
-                        /*mssg->gsv->sv_prn_nmbr_4 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 17:*/
-                        /*mssg->gsv->elvt_4 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 18:*/
-                        /*mssg->gsv->azmt_4 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 19:*/
-                        /*mssg->gsv->snr_4 = atoi(dt_itm);*/
-                        /*break;*/
-                /*case 20:*/
-                        /*mssg->gsv->chck_sum = strdup(dt_itm);*/
-                        /*mssg->gsv->data_valid = (int)strtol(dt_itm, NULL, 16) == */
-                                /*chck_sum ? true : false;*/
-                        /*break;*/
+                case 8:
+                        mssg->gsv->sv_prn_nmbr_2 = atoi(dt_itm);
+                        break;
+                case 9:
+                        mssg->gsv->elvt_2 = atoi(dt_itm);
+                        break;
+                case 10:
+                        mssg->gsv->azmt_2 = atoi(dt_itm);
+                        break;
+                case 11:
+                        mssg->gsv->snr_2 = atoi(dt_itm);
+                        break;
+                case 12:
+                        mssg->gsv->sv_prn_nmbr_3 = atoi(dt_itm);
+                        break;
+                case 13:
+                        mssg->gsv->elvt_3 = atoi(dt_itm);
+                        break;
+                case 14:
+                        mssg->gsv->azmt_3 = atoi(dt_itm);
+                        break;
+                case 15:
+                        mssg->gsv->snr_3 = atoi(dt_itm);
+                        break;
+                case 16:
+                        mssg->gsv->sv_prn_nmbr_4 = atoi(dt_itm);
+                        break;
+                case 17:
+                        mssg->gsv->elvt_4 = atoi(dt_itm);
+                        break;
+                case 18:
+                        mssg->gsv->azmt_4 = atoi(dt_itm);
+                        break;
+                case 19:
+                        mssg->gsv->snr_4 = atoi(dt_itm);
+                        break;
+                case 20:
+                        mssg->gsv->chck_sum = strdup(dt_itm);
+                        mssg->gsv->data_valid = (int)strtol(dt_itm, NULL, 16) == 
+                                chck_sum ? true : false;
+                        break;
                 default:
                         break;
         }

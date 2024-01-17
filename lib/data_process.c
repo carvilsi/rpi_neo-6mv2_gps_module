@@ -41,6 +41,8 @@ static void parse_data(char *dt_ln, int chck_sum, nmea_mssg *mssg)
                                         if (cntr == nmea_mssg_cntr)
                                                 done = 1;
                                         break;
+                                //TODO: the gsv message requires more work in order to
+                                //parse all the data related with second, third and fourth SVs
                                 case GSV:
                                         get_nmea_gsv_message(dt_itm, cntr, mssg, chck_sum);
                                         if (cntr == nmea_mssg_cntr)

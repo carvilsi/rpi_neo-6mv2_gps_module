@@ -9,7 +9,7 @@
 
 #define GPGGA_CNTR 13
 #define GPGLL_CNTR 7
-#define GPGSV_CNTR 20 
+#define GPGSV_CNTR 7 
 
 #ifndef STRUCT_H_INCLUDED
 #define STRUCT_H_INCLUDED
@@ -81,6 +81,6 @@ typedef struct {
 
 void get_nmea_gga_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
 void get_nmea_gll_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
-
+void get_nmea_gsv_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
 void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_mssg_cntr);
 void print_nmea_message(nmea_mssg mssg);

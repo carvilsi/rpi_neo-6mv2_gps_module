@@ -41,6 +41,11 @@ static void parse_data(char *dt_ln, int chck_sum, nmea_mssg *mssg)
                                         if (cntr == nmea_mssg_cntr)
                                                 done = 1;
                                         break;
+                                case GSV:
+                                        get_nmea_gsv_message(dt_itm, cntr, mssg, chck_sum);
+                                        if (cntr == nmea_mssg_cntr)
+                                                done = 1;
+                                        break;
                                 default:
                                         fprintf(stderr, "Unknown nmea message type\n");
                        }

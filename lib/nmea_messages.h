@@ -9,7 +9,7 @@
 
 #define GPGGA_CNTR 13
 #define GPGLL_CNTR 7
-#define GPGSV_CNTR 20 
+#define GPGSV_CNTR 7 
 
 #ifndef STRUCT_H_INCLUDED
 #define STRUCT_H_INCLUDED
@@ -61,20 +61,20 @@ typedef struct {
         int elvt; //5 Elevation, in degrees, 90° maximum
         int azmt; //6 Azimuth, degrees from True North, 000° through 359°
         int snr; //7 SNR, 00 through 99 dB (null when not tracking)
-        int sv_prn_nmbr_2; // SV PRN number (second SV)
-        int elvt_2; // Elevation, in degrees, 90° maximum  (second SV)
-        int azmt_2; // Azimuth, degrees from True North, 000° through 359° (second SV)
-        int snr_2; // SNR, 00 through 99 dB (null when not tracking) (second SV)
-        int sv_prn_nmbr_3; // SV PRN number (third SV)
-        int elvt_3; // Elevation, in degrees, 90° maximum  (third SV)
-        int azmt_3; // Azimuth, degrees from True North, 000° through 359° (third SV)
-        int snr_3; // SNR, 00 through 99 dB (null when not tracking) (third SV)
-        int sv_prn_nmbr_4; // SV PRN number (fourth SV)
-        int elvt_4; // Elevation, in degrees, 90° maximum  (fourth SV)
-        int azmt_4; // Azimuth, degrees from True North, 000° through 359° (fourth SV)
-        int snr_4; // SNR, 00 through 99 dB (null when not tracking) (fourth SV)
-        char *chck_sum; // The checksum value of the data
-        bool data_valid; // if the checksum is valid
+        //int sv_prn_nmbr_2; // SV PRN number (second SV)
+        //int elvt_2; // Elevation, in degrees, 90° maximum  (second SV)
+        //int azmt_2; // Azimuth, degrees from True North, 000° through 359° (second SV)
+        //int snr_2; // SNR, 00 through 99 dB (null when not tracking) (second SV)
+        //int sv_prn_nmbr_3; // SV PRN number (third SV)
+        //int elvt_3; // Elevation, in degrees, 90° maximum  (third SV)
+        //int azmt_3; // Azimuth, degrees from True North, 000° through 359° (third SV)
+        //int snr_3; // SNR, 00 through 99 dB (null when not tracking) (third SV)
+        //int sv_prn_nmbr_4; // SV PRN number (fourth SV)
+        //int elvt_4; // Elevation, in degrees, 90° maximum  (fourth SV)
+        //int azmt_4; // Azimuth, degrees from True North, 000° through 359° (fourth SV)
+        //int snr_4; // SNR, 00 through 99 dB (null when not tracking) (fourth SV)
+        //char *chck_sum; // The checksum value of the data
+        //bool data_valid; // if the checksum is valid
 }nmea_gsv;
 
 typedef struct {
@@ -94,6 +94,6 @@ typedef struct {
 
 void get_nmea_gga_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
 void get_nmea_gll_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
-
+void get_nmea_gsv_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
 void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_mssg_cntr);
 void print_nmea_message(nmea_mssg mssg);

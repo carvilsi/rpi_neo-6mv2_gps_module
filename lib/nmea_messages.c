@@ -6,6 +6,7 @@
 
 static void print_nmea_gga_message(nmea_gga *gga);
 static void print_nmea_gll_message(nmea_gll *gll);
+static void print_nmea_gsv_message(nmea_gsv *gsv);
 
 void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_mssg_cntr)
 {
@@ -37,17 +38,15 @@ void print_nmea_message(nmea_mssg mssg)
                 case GLL:
                         print_nmea_gll_message(mssg.gll);
                         break;
-                /*case GSV:*/
-                        /**nmea_mssg_str = GPGSV;*/
-                        /**nmea_mssg_cntr = GPGSV_CNTR;*/
-                        /*break;*/
+                case GSV:
+                        print_nmea_gsv_message(mssg.gsv);
+                        break;
                 default:
                         fprintf(stderr, "The nmea message type is unknown"
                                         " not possible to print it\n");
                         exit(EXIT_FAILURE);
         }
 }
-
 
 static void print_nmea_gga_message(nmea_gga *gga)
 {
@@ -81,6 +80,54 @@ static void print_nmea_gga_message(nmea_gga *gga)
                 gga->geoid_sep_units,
                 gga->chck_sum,
                 gga->data_valid ? "true" : "false");
+}
+
+static void print_nmea_gsv_message(nmea_gsv *gsv)
+{
+        printf("id: %s\n"
+               "ttl_nmbr_mssgs: %d\n"
+               "mssg_nmbr: %d\n"
+               "ttl_nmbr_svs_vis: %d\n"
+               "sv_prn_nmbr: %d\n"
+               "elvt: %d\n"
+               "azmt: %d\n"
+               "snr: %d\n",
+               /*"sv_prn_nmbr_2: %d\n"*/
+               /*"elvt_2: %d\n"*/
+               /*"azmt_2: %d\n"*/
+               /*"snr_2: %d\n"*/
+               /*"sv_prn_nmbr_3: %d\n"*/
+               /*"elvt_3: %d\n"*/
+               /*"azmt_3: %d\n"*/
+               /*"snr_3: %d\n"*/
+               /*"sv_prn_nmbr_4: %d\n"*/
+               /*"elvt_4: %d\n"*/
+               /*"azmt_4: %d\n"*/
+               /*"snr_4: %d\n"*/
+               /*"chck_sum: %s\n"*/
+               /*"data_valid: %s\n",*/
+               gsv->id,
+               gsv->ttl_nmbr_mssgs,
+               gsv->mssg_nmbr,
+               gsv->ttl_nmbr_svs_vis,
+               gsv->sv_prn_nmbr,
+               gsv->elvt,
+               gsv->azmt,
+               gsv->snr);
+               /*gsv->sv_prn_nmbr_2,*/
+               /*gsv->elvt_2,*/
+               /*gsv->azmt_2,*/
+               /*gsv->snr_2,*/
+               /*gsv->sv_prn_nmbr_3,*/
+               /*gsv->elvt_3,*/
+               /*gsv->azmt_3,*/
+               /*gsv->snr_3,*/
+               /*gsv->sv_prn_nmbr_4,*/
+               /*gsv->elvt_4,*/
+               /*gsv->azmt_4,*/
+               /*gsv->snr_4,*/
+               /*gsv->chck_sum,*/
+               /*gsv->data_valid ? "true" : "false");*/
 }
 
 static void print_nmea_gll_message(nmea_gll *gll) {
@@ -183,6 +230,80 @@ void get_nmea_gll_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
                         mssg->gll->data_valid = (int)strtol(dt_itm, NULL, 16) == 
                                 chck_sum ? true : false;
                         break;
+                default:
+                        break;
+        }
+}
+
+void get_nmea_gsv_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
+{
+        /*printf("%d: %s\n",itm, dt_itm);*/
+        switch (itm) {
+                case 0:
+                        mssg->gsv->id = strdup(dt_itm);
+                        break;
+                case 1:
+                        mssg->gsv->ttl_nmbr_mssgs = atoi(dt_itm);
+                        break;
+                case 2:
+                        mssg->gsv->mssg_nmbr = atoi(dt_itm);
+                        break;
+                case 3:
+                        mssg->gsv->ttl_nmbr_svs_vis = atoi(dt_itm);
+                        break;
+                case 4:
+                        mssg->gsv->sv_prn_nmbr = atoi(dt_itm);
+                        break;
+                case 5:
+                        mssg->gsv->elvt = atoi(dt_itm);
+                        break;
+                case 6:
+                        mssg->gsv->azmt = atoi(dt_itm);
+                        break;
+                case 7:
+                        mssg->gsv->snr = atoi(dt_itm);
+                        break;
+                /*case 8:*/
+                        /*mssg->gsv->sv_prn_nmbr_2 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 9:*/
+                        /*mssg->gsv->elvt_2 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 10:*/
+                        /*mssg->gsv->azmt_2 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 11:*/
+                        /*mssg->gsv->snr_2 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 12:*/
+                        /*mssg->gsv->sv_prn_nmbr_3 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 13:*/
+                        /*mssg->gsv->elvt_3 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 14:*/
+                        /*mssg->gsv->azmt_3 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 15:*/
+                        /*mssg->gsv->snr_3 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 16:*/
+                        /*mssg->gsv->sv_prn_nmbr_4 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 17:*/
+                        /*mssg->gsv->elvt_4 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 18:*/
+                        /*mssg->gsv->azmt_4 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 19:*/
+                        /*mssg->gsv->snr_4 = atoi(dt_itm);*/
+                        /*break;*/
+                /*case 20:*/
+                        /*mssg->gsv->chck_sum = strdup(dt_itm);*/
+                        /*mssg->gsv->data_valid = (int)strtol(dt_itm, NULL, 16) == */
+                                /*chck_sum ? true : false;*/
+                        /*break;*/
                 default:
                         break;
         }

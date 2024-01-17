@@ -6,8 +6,6 @@
 #include "lib/data_process.h"
 #include "lib/interface_comm.h"
 
-//TODO: add a getopts or maybe not (p.-)
-//TODO: create a struct for the program options or maybe not (p.-)
 int main(int argc, char **argv)
 {
 	if (argc < 2) {
@@ -24,23 +22,39 @@ int main(int argc, char **argv)
 
 	char *portname = argv[1];
 	
+        // lib usage
         // trying to read a GGA NMEA message from GPS module
-        nmea_gga pggga;
+        // create an instance of nmea_gga struct
+        nmea_gga gpgga;
+        // create an instance of nmea struct 
         nmea_mssg mssg;
+        // specify the type
         mssg.type = GGA;
-        mssg.gga = &pggga;
+        // append the gga type message
+        mssg.gga = &gpgga;
 
+        // read one gga message
         read_gps_data(portname, &mssg);
-        print_nmea_gga_message(mssg.gga);
+        // print, in this case the gga message
+        print_nmea_message(mssg);
 
         // trying to read a GLL NMEA message from GPS module
-        nmea_gll pggll;
+        nmea_gll gpgll;
         nmea_mssg ms;
         ms.type = GLL;
-        ms.gll = &pggll;
+        ms.gll = &gpgll;
 
         read_gps_data(portname, &ms);
-        print_nmea_gll_message(ms.gll);
+        print_nmea_message(ms);
+
+        // trying to read a GSV NMEA message from GPS module
+        nmea_gsv gpgsv;
+        nmea_mssg nmeagsv;
+        nmeagsv.type = GSV;
+        nmeagsv.gsv = &gpgsv;
+
+        read_gps_data(portname, &nmeagsv);
+        print_nmea_message(nmeagsv);
 		
 	return 0;
 }

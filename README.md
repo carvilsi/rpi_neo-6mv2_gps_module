@@ -10,6 +10,7 @@ And [here](https://aprs.gids.nl/nmea) more info about all the **$GPxxx** sentenc
 
 - [GPGGA](http://aprs.gids.nl/nmea/#gga)
 - [GLL](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_GLL.html)
+- [GSV](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_GSV.html)
 
 ## Connection RPI
 
@@ -36,7 +37,6 @@ $ `gcc -Wall neo-6mv2_reader.c lib/data_process.c lib/interface_comm.c lib/nmea_
 
 ### NMEA messages
 
-- [GSV](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_GSV.html)
 - [GSA](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_GSA.html)
 - [RMC](https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_RMC.html)
 - [VTG](https://aprs.gids.nl/nmea/#vtg)

@@ -4,16 +4,23 @@
 
 #include "nmea_messages.h"
 
+static void print_nmea_gga_message(nmea_gga *gga);
+static void print_nmea_gll_message(nmea_gll *gll);
+
 void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_mssg_cntr)
 {
         switch (mssg->type) {
                 case GGA:
-                        *nmea_mssg_str = PGGGA;
-                        *nmea_mssg_cntr = PGGGA_CNTR;
+                        *nmea_mssg_str = GPGGA;
+                        *nmea_mssg_cntr = GPGGA_CNTR;
                         break;
                 case GLL:
-                        *nmea_mssg_str = PGGLL;
-                        *nmea_mssg_cntr = PGGLL_CNTR;
+                        *nmea_mssg_str = GPGLL;
+                        *nmea_mssg_cntr = GPGLL_CNTR;
+                        break;
+                case GSV:
+                        *nmea_mssg_str = GPGSV;
+                        *nmea_mssg_cntr = GPGSV_CNTR;
                         break;
                 default:
                         fprintf(stderr, "The nmea message type is unknown\n");
@@ -21,7 +28,28 @@ void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_ms
         }
 }
 
-void print_nmea_gga_message(nmea_gga *gga)
+void print_nmea_message(nmea_mssg mssg)
+{
+        switch (mssg.type) {
+                case GGA:
+                        print_nmea_gga_message(mssg.gga);
+                        break;
+                case GLL:
+                        print_nmea_gll_message(mssg.gll);
+                        break;
+                /*case GSV:*/
+                        /**nmea_mssg_str = GPGSV;*/
+                        /**nmea_mssg_cntr = GPGSV_CNTR;*/
+                        /*break;*/
+                default:
+                        fprintf(stderr, "The nmea message type is unknown"
+                                        " not possible to print it\n");
+                        exit(EXIT_FAILURE);
+        }
+}
+
+
+static void print_nmea_gga_message(nmea_gga *gga)
 {
         printf("id: %s\n"
                "utc_pstfx: %f\n"
@@ -55,7 +83,7 @@ void print_nmea_gga_message(nmea_gga *gga)
                 gga->data_valid ? "true" : "false");
 }
 
-void print_nmea_gll_message(nmea_gll *gll) {
+static void print_nmea_gll_message(nmea_gll *gll) {
         printf("id: %s\n"
                "latitude: %f\n"
                "dir_lat: %s\n"

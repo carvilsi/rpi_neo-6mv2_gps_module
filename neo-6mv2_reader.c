@@ -31,7 +31,8 @@ int main(int argc, char **argv)
         mssg.gga = &pggga;
 
         read_gps_data(portname, &mssg);
-        print_nmea_gga_message(mssg.gga);
+        /*print_nmea_gga_message(mssg.gga);*/
+        print_nmea_message(mssg);
 
         // trying to read a GLL NMEA message from GPS module
         nmea_gll pggll;
@@ -40,7 +41,8 @@ int main(int argc, char **argv)
         ms.gll = &pggll;
 
         read_gps_data(portname, &ms);
-        print_nmea_gll_message(ms.gll);
+        /*print_nmea_gll_message(ms.gll);*/
+        print_nmea_message(ms);
 		
 	return 0;
 }

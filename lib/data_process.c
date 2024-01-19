@@ -8,7 +8,7 @@
 #include "interface_comm.h"
 #include "data_process.h"
 
-bool RAW = false;
+bool RAW = true;
 int done = 0;
 
 static void parse_data(char *dt_ln, int chck_sum, nmea_mssg *mssg)

@@ -7,6 +7,7 @@
 static void print_nmea_gga_message(nmea_gga *gga);
 static void print_nmea_gll_message(nmea_gll *gll);
 static void print_nmea_gsv_message(nmea_gsv *gsv);
+static void print_nmea_vtg_message(nmea_vtg *vtg);
 
 void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_mssg_cntr)
 {
@@ -22,6 +23,10 @@ void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_ms
                 case GSV:
                         *nmea_mssg_str = GPGSV;
                         *nmea_mssg_cntr = GPGSV_CNTR;
+                        break;
+                 case VTG:
+                        *nmea_mssg_str = GPVTG;
+                        *nmea_mssg_cntr = GPVTG_CNTR;
                         break;
                 default:
                         fprintf(stderr, "The nmea message type is unknown\n");
@@ -41,6 +46,10 @@ void print_nmea_message(nmea_mssg mssg)
                 case GSV:
                         print_nmea_gsv_message(mssg.gsv);
                         break;
+                case VTG:
+                        print_nmea_vtg_message(mssg.vtg);
+                        break;
+
                 default:
                         fprintf(stderr, "The nmea message type is unknown"
                                         " not possible to print it\n");
@@ -119,6 +128,34 @@ static void print_nmea_gll_message(nmea_gll *gll) {
                 gll->utc_pstfx,
                 gll->chck_sum,
                 gll->data_valid ? "true" : "false");
+}
+
+void print_nmea_vtg_message(nmea_vtg *vtg)
+{
+        printf("id: %s\n"
+               "trck_md_gd_dgrs: %f\n"       
+               "trck_md_gd_rel_tr_nrth: %s\n"
+               "trck_md_gd_mgnt: %f\n"
+               "trck_md_gd_rel_mg_nrth: %s\n"
+               "spd_knts: %f\n"
+               "spd_msr_knts: %s\n"
+               "spd_grnd_kph: %f\n"
+               "spd_grnd_mrs_kph: %s\n"
+               "mod_ind: %s\n"
+               "chck_sum: %s\n"
+               "data_valid: %s\n",
+               vtg->id,
+               vtg->trck_md_gd_dgrs,
+               vtg->trck_md_gd_rel_tr_nrth,
+               vtg->trck_md_gd_mgnt,
+               vtg->trck_md_gd_rel_mg_nrth,
+               vtg->spd_knts,
+               vtg->spd_msr_knts,
+               vtg->spd_grnd_kph,
+               vtg->spd_grnd_mrs_kph,
+               vtg->mod_ind,
+               vtg->chck_sum,
+               vtg->data_valid ? "true" : "false");
 }
 
 void get_nmea_gga_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
@@ -234,6 +271,50 @@ void get_nmea_gsv_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
                         break;
                 case 7:
                         mssg->gsv->snr = atoi(dt_itm);
+                        break;
+                default:
+                        break;
+        }
+}
+
+void get_nmea_vtg_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum)
+{
+        switch (itm) {
+                case 0:
+                       mssg->vtg->id = strdup(dt_itm);
+                      break;
+                case 1:
+                      mssg->vtg->trck_md_gd_dgrs = atof(dt_itm);
+                      break;
+                case 2:
+                      mssg->vtg->trck_md_gd_rel_tr_nrth = strdup(dt_itm);
+                      break;
+                case 3:
+                      mssg->vtg->trck_md_gd_mgnt = atof(dt_itm);
+                      break;
+                case 4:
+                      mssg->vtg->trck_md_gd_rel_mg_nrth = strdup(dt_itm);
+                      break;
+                case 5:
+                      mssg->vtg->spd_knts = atof(dt_itm);
+                      break;
+                case 6:
+                      mssg->vtg->spd_msr_knts = strdup(dt_itm);
+                      break;
+                case 7:
+                      mssg->vtg->spd_grnd_kph = atof(dt_itm);
+                      break;
+                case 8:
+                      mssg->vtg->spd_grnd_mrs_kph = strdup(dt_itm);
+                      break;
+                case 9:
+                      mssg->vtg->mod_ind = strdup(dt_itm);
+                      break;
+                case 10:
+                        memmove(dt_itm, dt_itm + 1, strlen(dt_itm));
+                        mssg->vtg->chck_sum = strdup(dt_itm);
+                        mssg->vtg->data_valid = (int)strtol(dt_itm, NULL, 16) == 
+                                chck_sum ? true : false;
                         break;
                 default:
                         break;

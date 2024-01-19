@@ -10,6 +10,7 @@
 #define GPGGA_CNTR 13
 #define GPGLL_CNTR 7
 #define GPGSV_CNTR 7 
+#define GPVTG_CNTR 9 
 
 #ifndef STRUCT_H_INCLUDED
 #define STRUCT_H_INCLUDED
@@ -64,16 +65,35 @@ typedef struct {
         int snr; //7 SNR, 00 through 99 dB (null when not tracking)
 }nmea_gsv;
 
+//$GPVTG
+//check: https://receiverhelp.trimble.com/alloy-gnss/en-us/NMEA-0183messages_VTG.html
+typedef struct {
+        char *id; //0 Message ID $GPVTG
+        float trck_md_gd_dgrs; //1 Track made good (degrees true)
+        char *trck_md_gd_rel_tr_nrth; //2 T: track made good is relative to true north
+        float trck_md_gd_mgnt; //3 Track made good (degrees magnetic)
+        char *trck_md_gd_rel_mg_nrth; //4 M: track made good is relative to magnetic north
+        float spd_knts; //5 Speed, in knots
+        char *spd_msr_knts; //6 N: speed is measured in knots
+        float spd_grnd_kph; //7 Speed over ground in kilometers/hour (kph)
+        char *spd_grnd_mrs_kph; //8 K: speed over ground is measured in kph
+        char *mod_ind;//9 Mode indicator 
+        char *chck_sum; // The checksum value of the data
+        bool data_valid; // if the checksum is valid
+}nmea_vtg;
+
 typedef struct {
         enum {
                 GGA,
                 GLL,
-                GSV
+                GSV,
+                VTG,
         }type;
         union {
                 nmea_gga *gga;
                 nmea_gll *gll;
                 nmea_gsv *gsv;
+                nmea_vtg *vtg;
         };
 }nmea_mssg;
 
@@ -82,5 +102,6 @@ typedef struct {
 void get_nmea_gga_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
 void get_nmea_gll_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
 void get_nmea_gsv_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
+void get_nmea_vtg_message(char *dt_itm, int itm, nmea_mssg *mssg, int chck_sum);
 void get_nmea_message_values(nmea_mssg *mssg, char **nmea_mssg_str, int *nmea_mssg_cntr);
 void print_nmea_message(nmea_mssg mssg);

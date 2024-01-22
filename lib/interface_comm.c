@@ -5,8 +5,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
-#include <string.h>
-#include <termios.h>
 
 #include "interface_comm.h"
 
@@ -70,7 +68,7 @@ int init_serial_interface(char *portname)
 	        printf("error %d opening %s: %s", errno, portname, strerror(errno));
 	}
 	
-	set_interface_attribs(fd, BAUD_RATE, NO_PARITY);
+	set_interface_attribs(fd, BAUD_RATE, PARITY);
 	set_blocking(fd, 0);
 
         return fd;

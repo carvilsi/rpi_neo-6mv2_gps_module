@@ -107,10 +107,10 @@ void process_buffer(uint8_t *buff, nmea_mssg *mssg)
 void read_gps_data(char *portname, nmea_mssg *mssg)
 {
         done = 0;
-        int fd = init_serial_interface(portname);
+        FILE *fd = init_serial_interface(portname);
 	uint8_t buff[BUFF_SIZE];
         while (done == 0) {
-		read(fd, buff, sizeof buff);
+		fread(buff, sizeof(uint8_t), sizeof(buff), fd);
 		process_buffer(buff, mssg);
         }
 }

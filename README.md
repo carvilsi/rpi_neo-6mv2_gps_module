@@ -40,12 +40,12 @@ At **src/neo-6mv2_reader.c** file the code is commented in order to have an exam
 
 - Edit `/boot/config.txt` and add: `enable_uart=1`
 - To disable bluetooth; also at `/boot/config.txt` add: `dtoverlay=disable-bt`
-- To disable the console for serial:
+- To disable the console for serial; Edit `/boot/cmdline.txt` and remove `console=serial0,115200` and also:
 ```
 sudo systemctl stop serial-getty@ttyS0.service
 sudo systemctl disable serial-getty@ttyS0.service
 ```
-- Edit `/boot/cmdline.txt` and remove `console=serial0,115200`
+
 - Reboot: $ `sudo reboot`
 
 ##### Connection RPI

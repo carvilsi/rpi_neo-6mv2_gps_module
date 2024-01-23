@@ -22,7 +22,11 @@ $ `make`
 
 $ `./rpi_neo-6mv2_reader [serial]`
 
-e.g: `./rpi_neo-6mv2_reader /dev/ttyAMA0`
+e.g: $ `./rpi_neo-6mv2_reader /dev/ttyAMA0`
+
+### lib usage
+
+At **src/neo-6mv2_reader.c** file the code is commented in order to have an example for usage.
 
 ## Tested on
 

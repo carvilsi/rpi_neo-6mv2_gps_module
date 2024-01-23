@@ -1,11 +1,9 @@
 #include <stdint.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 
-#include "interface_comm.h"
 #include "data_process.h"
 
 bool RAW = false;
@@ -41,8 +39,6 @@ static void parse_data(char *dt_ln, int chck_sum, nmea_mssg *mssg)
                                         if (cntr == nmea_mssg_cntr)
                                                 done = 1;
                                         break;
-                                //TODO: the gsv message requires more work in order to
-                                //parse all the data related with second, third and fourth SVs
                                 case GSV:
                                         get_nmea_gsv_message(dt_itm, cntr, mssg, chck_sum);
                                         if (cntr == nmea_mssg_cntr)
@@ -103,10 +99,9 @@ static void process_buffer(uint8_t *buff, nmea_mssg *mssg)
 	}
 }
 
-void read_gps_data(char *portname, nmea_mssg *mssg)
+void read_gps_data(FILE *fd, nmea_mssg *mssg)
 {
         done = 0;
-        FILE *fd = init_serial_interface(portname);
 	uint8_t buff[BUFF_SIZE];
         while (done == 0) {
 		fread(buff, sizeof(uint8_t), sizeof(buff), fd);

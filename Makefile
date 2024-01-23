@@ -3,7 +3,7 @@ CCFLAGS = -Werror -Wall
 
 NAM := rpi_neo-6mv2_reader
 LIB := $(shell find ./lib/ -name '*.c') 
-SRC := $(shell find ./ -name '*.c') 
+SRC := $(shell find ./src/ -name '*.c') 
 
 all: cexec 
 
@@ -17,7 +17,7 @@ debug: cexec
 
 # debug and do not call the canary token 
 cexec:
-	@$(CC) $(CCFLAGS) -o $(NAM) $(SRC) $(LDFLAGS)
+	@$(CC) $(CCFLAGS) -o $(NAM) $(SRC) $(LIB) $(LDFLAGS)
 
 clean:
 	@-rm $(NAM) ||:

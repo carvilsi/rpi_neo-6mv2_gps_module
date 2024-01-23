@@ -58,8 +58,7 @@ static void parse_data(char *dt_ln, int chck_sum, nmea_mssg *mssg)
         }
 }
 
-// XXX: Not super proud about check sum approach
-void process_buffer(uint8_t *buff, nmea_mssg *mssg)
+static void process_buffer(uint8_t *buff, nmea_mssg *mssg)
 {
         int cntr = 0;
 	int i = 0;

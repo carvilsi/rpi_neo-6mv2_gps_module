@@ -45,7 +45,7 @@ At **src/neo-6mv2_reader.c** file the code is commented in order to have an exam
 sudo systemctl stop serial-getty@ttyS0.service
 sudo systemctl disable serial-getty@ttyS0.service
 ```
-    - Edit `/boot/cmdline.txt` and remove `console=serial0,115200`
+- Edit `/boot/cmdline.txt` and remove `console=serial0,115200`
 - Reboot: $ `sudo reboot`
 
 ##### Connection RPI
